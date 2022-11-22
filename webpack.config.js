@@ -2,12 +2,14 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const cssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const terserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.js",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "main.js", 
+        filename: "[name].[contenthash].js", 
     },
     resolve: {
         extensions: [".js"]
@@ -51,7 +53,9 @@ module.exports = {
             template: "./public/index.html",
             filename: "./index.html"
         }),
-        new miniCssExtractPlugin(),
+        new miniCssExtractPlugin({
+            filename: "assets/[name].[contenthash].css"
+        }),
         new CopyPlugin({
             patterns: [
                 {
@@ -60,5 +64,12 @@ module.exports = {
                 }
             ]
         })
-    ]
+    ],
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new cssMinimizerPlugin(),
+            new terserPlugin(),
+        ]
+    }
 }
