@@ -8,7 +8,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "main.js", 
-        // assetModuleFilename: "assets/images/[hash].[ext].[query]"
     },
     resolve: {
         extensions: [".js"]
@@ -38,22 +37,11 @@ module.exports = {
                 }
             },
             {
-                test: /.(woff|woff2)?$/i,
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: "asset/resource", 
-                dependency: {
-                    not: ["url"]
+                generator: {
+                    filename: "assets/fonts/[hash][ext][query]"
                 }
-                // use: {
-                //     loader: "url-loader",
-                //     options: {
-                //         limit: 10000,
-                //         mimetype: "application/font-woff",
-                //         name: "[name].[ext]",
-                //         outputPath: "./assets/fonts/",
-                //         publicPath: "./assets/fonts/",
-                //         esModule: false,
-                //     }
-                // }
             }
         ]
     },
