@@ -72,5 +72,11 @@ module.exports = {
             ]
         }),
         new dotEnv(),
-    ]
+    ],
+    devServer: {
+        static: path.join(__dirname, "dist"),
+        compress: true,
+        historyApiFallback: true,
+        port: 3005
+    }
 }
