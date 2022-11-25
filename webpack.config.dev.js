@@ -3,6 +3,7 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const dotEnv = require("dotenv-webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
     entry: "./src/index.js",
@@ -11,6 +12,7 @@ module.exports = {
         filename: "[name].[contenthash].js", 
     },
     mode: "development",
+    devtool: "source-map",
     watch: true,
     resolve: {
         extensions: [".js"],
@@ -72,6 +74,7 @@ module.exports = {
             ]
         }),
         new dotEnv(),
+        new BundleAnalyzerPlugin()
     ],
     devServer: {
         static: path.join(__dirname, "dist"),
